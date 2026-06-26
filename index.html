@@ -20,6 +20,8 @@
             max-width: 800px;
             margin: 0 auto;
         }
+        
+        /* ===== HEADER ===== */
         header {
             background: linear-gradient(135deg, #1e3c72, #2a5298);
             color: white;
@@ -46,36 +48,23 @@
             font-weight: bold;
             font-size: 1.2em;
             margin-bottom: 15px;
-            transition: all 0.5s ease;
             cursor: pointer;
-            user-select: none;
-            position: relative;
+            transition: all 0.3s ease;
         }
         .members-count:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
         }
-        .members-count.updating {
-            background: #ffaa00;
-            transform: scale(1.05);
+        .update-status {
+            font-size: 0.8em;
+            opacity: 0.7;
+            margin-top: 5px;
+            color: #ddd;
         }
-        .members-count .loader {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border: 2px solid #1e3c72;
-            border-top: 2px solid transparent;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-right: 8px;
-            vertical-align: middle;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        
+        /* ===== دکمه‌ها ===== */
         .btn {
             display: inline-block;
-            padding: 12px 30px;
+            padding: 10px 25px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: bold;
@@ -83,62 +72,24 @@
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
-            font-size: 1em;
+            font-size: 0.95em;
         }
         .btn:hover {
             transform: scale(1.05);
             opacity: 0.9;
         }
-        .btn-eitaa {
-            background: #00a859;
-            color: white;
-        }
-        .btn-site {
-            background: #ffd700;
-            color: #1e3c72;
-        }
-        .btn-upload {
-            background: #2a5298;
-            color: white;
-        }
-        .btn-challenge {
-            background: #e74c3c;
-            color: white;
-        }
-        .btn-purple {
-            background: #8e2de2;
-            color: white;
-        }
-        .btn-answer {
-            background: #27ae60;
-            color: white;
-            margin: 5px;
-            min-width: 60px;
-        }
-        .btn-answer:hover {
-            background: #2ecc71;
-        }
-        .btn-answer.selected {
-            background: #f39c12;
-            transform: scale(1.1);
-        }
-        .btn-answer.correct {
-            background: #27ae60;
-            animation: pulseGreen 0.5s ease;
-        }
-        .btn-answer.wrong {
-            background: #e74c3c;
-            animation: shake 0.5s ease;
-        }
-        @keyframes pulseGreen {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); background: #2ecc71; }
-        }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
+        .btn-eitaa { background: #00a859; color: white; }
+        .btn-site { background: #ffd700; color: #1e3c72; }
+        .btn-upload { background: #2a5298; color: white; }
+        .btn-challenge { background: #e74c3c; color: white; }
+        .btn-purple { background: #8e2de2; color: white; }
+        .btn-primary { background: #2a5298; color: white; }
+        .btn-success { background: #27ae60; color: white; }
+        .btn-danger { background: #e74c3c; color: white; }
+        .btn-warning { background: #f39c12; color: white; }
+        .btn-sm { padding: 5px 12px; font-size: 0.8em; }
+        
+        /* ===== بخش‌ها ===== */
         .section {
             background: white;
             padding: 20px;
@@ -151,7 +102,20 @@
             border-bottom: 3px solid #ffd700;
             padding-bottom: 10px;
             margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
         }
+        .section h2 .badge {
+            font-size: 0.6em;
+            background: #2a5298;
+            color: white;
+            padding: 3px 12px;
+            border-radius: 20px;
+        }
+        
+        /* ===== چالش ===== */
         .challenge-box {
             background: #eef2f7;
             padding: 15px;
@@ -176,7 +140,7 @@
         .challenge-box pre .string { color: #e6db74; }
         .challenge-box pre .comment { color: #75715e; }
         .challenge-box pre .number { color: #ae81ff; }
-        .challenge-box pre .variable { color: #f8f8f2; }
+        
         .options-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -253,15 +217,289 @@
             border: 2px solid #e74c3c;
             color: #721c24;
         }
-        .result-box.info {
-            background: #d1ecf1;
-            border: 2px solid #17a2b8;
-            color: #0c5460;
-        }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        
+        .explanation {
+            background: #e8f4fd;
+            border-right: 4px solid #2a5298;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+            text-align: right;
+        }
+        .explanation.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        .explanation .highlight {
+            background: #ffd700;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #1e3c72;
+        }
+        
+        /* ===== فایل‌های چندرسانه‌ای ===== */
+        .media-container {
+            margin: 10px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #1a1a2e;
+        }
+        .media-container img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+            display: block;
+        }
+        .media-container video {
+            width: 100%;
+            max-height: 400px;
+            display: block;
+        }
+        .media-container audio {
+            width: 100%;
+            display: block;
+            padding: 15px;
+        }
+        .media-container .file-link {
+            display: block;
+            padding: 15px;
+            color: #2a5298;
+            text-decoration: none;
+            text-align: center;
+            background: #eef2f7;
+            border-radius: 8px;
+        }
+        .media-container .file-link:hover {
+            background: #dce3ed;
+        }
+        
+        /* ===== پست‌ها ===== */
+        .post {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-right: 4px solid #2a5298;
+            transition: all 0.3s ease;
+        }
+        .post:hover {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .post .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        .post .post-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+        .post .post-date {
+            font-size: 0.8em;
+            color: #888;
+        }
+        .post .post-content {
+            color: #444;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        .post .post-content pre {
+            background: #2d2d2d;
+            color: #ccc;
+            padding: 10px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 10px 0;
+            direction: ltr;
+            text-align: left;
+            font-size: 13px;
+        }
+        .post .post-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        .post .post-tags {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+        .post .post-tags span {
+            background: #e8edf5;
+            padding: 2px 10px;
+            border-radius: 15px;
+            font-size: 0.75em;
+            color: #2a5298;
+        }
+        
+        /* ===== فرم مدیریت ===== */
+        .admin-form {
+            background: #eef2f7;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        .admin-form.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        .admin-form input,
+        .admin-form textarea,
+        .admin-form select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-family: inherit;
+            font-size: 1em;
+            transition: border 0.3s ease;
+        }
+        .admin-form input:focus,
+        .admin-form textarea:focus,
+        .admin-form select:focus {
+            border-color: #2a5298;
+            outline: none;
+        }
+        .admin-form textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        .admin-form .form-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .admin-form .form-row > * {
+            flex: 1;
+            min-width: 150px;
+        }
+        .admin-form .form-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+        
+        /* ===== آپلود فایل ===== */
+        .file-upload-area {
+            border: 2px dashed #2a5298;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: #f8f9fa;
+        }
+        .file-upload-area:hover {
+            background: #e8edf5;
+            border-color: #1e3c72;
+        }
+        .file-upload-area.dragover {
+            background: #d4e4f7;
+            border-color: #ffd700;
+        }
+        .file-upload-area input[type="file"] {
+            display: none;
+        }
+        .file-upload-area .file-name {
+            color: #2a5298;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        .file-upload-area .file-preview {
+            margin-top: 10px;
+            max-height: 200px;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        .file-upload-area .file-preview img,
+        .file-upload-area .file-preview video {
+            max-width: 100%;
+            max-height: 180px;
+        }
+        .file-upload-area .remove-file {
+            color: #e74c3c;
+            cursor: pointer;
+            font-size: 0.85em;
+            margin-top: 5px;
+            display: inline-block;
+        }
+        .file-upload-area .remove-file:hover {
+            text-decoration: underline;
+        }
+        
+        /* ===== مودال رمز ===== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal-overlay.show {
+            display: flex;
+        }
+        .modal-box {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        .modal-box h2 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+        }
+        .modal-box p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .modal-box input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            text-align: center;
+            direction: ltr;
+            margin-bottom: 15px;
+        }
+        .modal-box input:focus {
+            border-color: #2a5298;
+            outline: none;
+        }
+        .modal-box .error-msg {
+            color: #e74c3c;
+            font-size: 0.9em;
+            display: none;
+            margin-bottom: 10px;
+        }
+        .modal-box .error-msg.show {
+            display: block;
+        }
+        
+        /* ===== سایر ===== */
         .link-card {
             background: linear-gradient(145deg, #4a00e0, #8e2de2);
             color: white;
@@ -269,10 +507,6 @@
             border-radius: 15px;
             text-align: center;
             margin-bottom: 25px;
-        }
-        .link-card h3 {
-            font-size: 1.5em;
-            margin-bottom: 10px;
         }
         .team-list {
             list-style: none;
@@ -313,50 +547,44 @@
             text-align: center;
             font-size: 0.95em;
         }
-        .update-status {
-            font-size: 0.8em;
-            opacity: 0.8;
-            margin-top: 5px;
-            direction: ltr;
-            color: #ddd;
-            transition: all 0.3s ease;
+        .empty-state {
+            text-align: center;
+            padding: 30px;
+            color: #888;
         }
-        .status-error {
-            color: #ff6b6b !important;
+        .empty-state .icon {
+            font-size: 3em;
+            margin-bottom: 10px;
         }
-        .status-success {
-            color: #51cf66 !important;
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.5s ease;
+            pointer-events: none;
         }
-        .status-info {
-            color: #ffd700 !important;
+        .toast.show {
+            opacity: 1;
+            pointer-events: auto;
         }
+        .toast.success { background: #27ae60; }
+        .toast.error { background: #e74c3c; }
+        .toast.info { background: #2a5298; }
+        
         @media (max-width: 600px) {
             header h1 { font-size: 1.8em; }
-            .btn { padding: 10px 20px; font-size: 0.9em; }
-            .btn-group { flex-direction: column; align-items: center; }
+            .btn { padding: 8px 16px; font-size: 0.85em; }
+            .section { padding: 15px; }
+            .post .post-header { flex-direction: column; align-items: flex-start; gap: 5px; }
+            .admin-form .form-row { flex-direction: column; }
             .options-grid { grid-template-columns: 1fr; }
-        }
-        .explanation {
-            background: #e8f4fd;
-            border-right: 4px solid #2a5298;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            display: none;
-            text-align: right;
-        }
-        .explanation.show {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-        .explanation strong {
-            color: #1e3c72;
-        }
-        .explanation .highlight {
-            background: #ffd700;
-            padding: 2px 6px;
-            border-radius: 3px;
-            color: #1e3c72;
         }
     </style>
 </head>
@@ -364,10 +592,24 @@
 
 <div class="container">
 
-    <!-- ===== پیام راهنما برای فایرفاکس ===== -->
+    <!-- ===== مودال رمز مدیریت ===== -->
+    <div class="modal-overlay" id="adminModal">
+        <div class="modal-box">
+            <h2>🔐 ورود به مدیریت</h2>
+            <p>برای دسترسی به پنل مدیریت، رمز عبور را وارد کنید</p>
+            <input type="password" id="adminPassword" placeholder="رمز عبور" onkeydown="if(event.key==='Enter') checkAdminPassword()">
+            <div class="error-msg" id="passwordError">❌ رمز عبور اشتباه است!</div>
+            <button onclick="checkAdminPassword()" class="btn btn-primary" style="width:100%">✅ ورود</button>
+            <button onclick="closeAdminModal()" class="btn btn-danger" style="width:100%; margin-top:8px;">❌ انصراف</button>
+        </div>
+    </div>
+
+    <!-- ===== Toast ===== -->
+    <div id="toast" class="toast"></div>
+
+    <!-- ===== پیام راهنما ===== -->
     <div class="firefox-notice">
-        🔒 <strong>نکته امنیتی:</strong> اگر از فایرفاکس استفاده می‌کنید، لینک‌های ایتا ممکنه با خطا مواجه بشن. 
-        روی دکمه‌ها کلیک کنید تا در پنجره جدید باز بشن.
+        🔒 <strong>نکته:</strong> برای مدیریت کانال، روی دکمه <strong>⚙️ مدیریت</strong> کلیک کنید.
     </div>
 
     <!-- ===== HEADER ===== -->
@@ -381,20 +623,14 @@
         <div class="btn-group">
             <button onclick="openLink('https://eitaa.com/irandigital_python')" class="btn btn-eitaa">🚀 پیوستن به کانال ایتا</button>
             <button onclick="openLink('https://mh1392rad-source.github.io/irandigital/')" class="btn btn-site">⭐ سایت ابزارهای کانال</button>
+            <button onclick="openAdminModal()" class="btn btn-purple" id="adminToggleBtn">⚙️ مدیریت</button>
         </div>
     </header>
 
-    <!-- ===== کارت لینک به سایت دیگه ===== -->
-    <div class="link-card">
-        <h3>🌐 همه ابزارهای کانال در یک جا</h3>
-        <p style="margin-bottom: 15px;">بازی ریاضی، شطرنج، هوش مصنوعی، چت‌بات و ابزارهای بیشتر</p>
-        <button onclick="openLink('https://mh1392rad-source.github.io/irandigital/')" class="btn btn-purple">🔗 ورود به سایت اصلی</button>
-    </div>
-
     <!-- ===== چالش امروز ===== -->
-    <section class="section">
+    <section class="section" id="challengeSection">
         <h2>🔥 چالش امروز</h2>
-        <div class="challenge-box">
+        <div class="challenge-box" id="challengeBox">
             <p><strong>سوال:</strong> خروجی کد زیر چیست؟</p>
             <pre>
 <span class="keyword">x</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]
@@ -437,21 +673,79 @@
                 </p>
             </div>
 
-            <p class="note" style="margin-top: 15px;">✅ پاسخ صحیح دیروز: گزینه D (Error)</p>
-            <p class="note">📊 پاسخ خود را انتخاب کنید و توضیح را ببینید!</p>
+            <p class="note" style="margin-top: 15px;">📊 پاسخ خود را انتخاب کنید و توضیح را ببینید!</p>
         </div>
     </section>
 
-    <!-- ===== ارسال پروژه ===== -->
+    <!-- ===== پنل مدیریت ===== -->
+    <div class="admin-form" id="adminPanel">
+        <h3 style="color: #1e3c72; margin-bottom: 15px;">📝 مدیریت پست‌ها</h3>
+        
+        <input type="hidden" id="editPostId" value="">
+        <input type="hidden" id="fileData" value="">
+        <input type="hidden" id="fileType" value="">
+        <input type="hidden" id="fileName" value="">
+        
+        <div class="form-row">
+            <input type="text" id="postTitle" placeholder="عنوان پست (مثلاً: چالش امروز)">
+            <select id="postType">
+                <option value="challenge">🔥 چالش</option>
+                <option value="tutorial">📚 آموزش</option>
+                <option value="news">📰 اخبار</option>
+                <option value="project">📁 پروژه</option>
+                <option value="general">💬 عمومی</option>
+            </select>
+        </div>
+        
+        <textarea id="postContent" placeholder="متن پست... (می‌توانید از کد استفاده کنید)"></textarea>
+        
+        <input type="text" id="postCode" placeholder="کد (اختیاری - برای نمایش کد پایتون)">
+        
+        <!-- ===== بخش آپلود فایل ===== -->
+        <div class="file-upload-area" id="fileUploadArea" onclick="document.getElementById('fileInput').click()">
+            <div id="filePlaceholder">
+                <span style="font-size: 2em;">📎</span>
+                <p>برای آپلود فایل کلیک کنید یا بکشید و رها کنید</p>
+                <p style="font-size: 0.8em; color: #888;">تصویر، ویدیو یا صوت (حداکثر ۱۰ مگابایت)</p>
+            </div>
+            <div id="filePreview" style="display: none;">
+                <div class="file-preview" id="filePreviewContent"></div>
+                <div class="file-name" id="fileNameDisplay"></div>
+                <span class="remove-file" onclick="event.stopPropagation(); removeFile()">❌ حذف فایل</span>
+            </div>
+            <input type="file" id="fileInput" accept="image/*,video/*,audio/*" onchange="handleFileUpload(event)">
+        </div>
+        
+        <div class="form-row">
+            <input type="text" id="postTags" placeholder="تگ‌ها (مثلاً: پایتون, هوش مصنوعی)">
+            <input type="text" id="postAnswer" placeholder="پاسخ (برای چالش‌ها)">
+        </div>
+        
+        <div class="form-actions">
+            <button onclick="savePost()" class="btn btn-success">💾 ذخیره پست</button>
+            <button onclick="clearForm()" class="btn btn-warning">🗑️ پاک کردن فرم</button>
+            <button onclick="closeAdminPanel()" class="btn btn-danger">❌ بستن مدیریت</button>
+        </div>
+    </div>
+
+    <!-- ===== لیست پست‌ها ===== -->
     <section class="section">
-        <h2>📁 ارسال پروژه پایتون</h2>
-        <p>پروژه‌های خودت رو آپلود کن تا بررسی بشه!</p>
-        <p style="font-size: 0.9em; color: #555; margin: 10px 0;">⬇️ روی دکمه زیر کلیک کن و فایل خودت رو آپلود کن.</p>
+        <h2>
+            📰 پست‌های کانال
+            <span class="badge" id="postCount">۰ پست</span>
+        </h2>
         
-        <button onclick="openLink('https://docs.google.com/forms/d/e/1FAIpQLSdHsVuff2W7e7hRRQGIRbGLVeqCPje-Vamhch5W-qnr_O0DbA/viewform?usp=header')" class="btn btn-upload">📤 آپلود فایل پروژه</button>
-        
-        <p class="note">🔹 فایل‌های زیپ یا py رو آپلود کن. حتماً آیدی ایتا و نام پروژه رو بنویس.</p>
+        <div id="postsContainer">
+            <!-- پست‌ها توسط جاوااسکریپت ساخته می‌شوند -->
+        </div>
     </section>
+
+    <!-- ===== کارت لینک ===== -->
+    <div class="link-card">
+        <h3>🌐 همه ابزارهای کانال در یک جا</h3>
+        <p style="margin-bottom: 15px;">بازی ریاضی، شطرنج، هوش مصنوعی، چت‌بات و ابزارهای بیشتر</p>
+        <button onclick="openLink('https://mh1392rad-source.github.io/irandigital/')" class="btn btn-purple">🔗 ورود به سایت اصلی</button>
+    </div>
 
     <!-- ===== تیم مدیریت ===== -->
     <section class="section">
@@ -473,56 +767,164 @@
 </div>
 
 <script>
-    // ===== تنظیمات =====
-    const CHANNEL_USERNAME = 'irandigital_python';
-    const UPDATE_INTERVAL = 30000;
-    const MEMBERS_ELEMENT_ID = 'membersNumber';
-    const COUNT_CONTAINER_ID = 'membersCount';
-    const STATUS_ELEMENT_ID = 'updateStatus';
+    // ============================================================
+    //  رمز مدیریت
+    // ============================================================
+    const ADMIN_PASSWORD = 'm1h0r52@';
+    let isAdmin = false;
 
-    // ===== مقدار پیش‌فرض =====
-    let currentMembers = 756;
-    let isUpdating = false;
-    let selectedOption = null;
+    function openAdminModal() {
+        document.getElementById('adminModal').classList.add('show');
+        document.getElementById('adminPassword').value = '';
+        document.getElementById('passwordError').classList.remove('show');
+        document.getElementById('adminPassword').focus();
+    }
 
-    // ===== تابع باز کردن لینک =====
-    function openLink(url) {
-        console.log('🔄 تلاش برای باز کردن: ' + url);
-        try {
-            window.open(url, '_blank', 'noopener,noreferrer');
-        } catch (error) {
-            console.error('❌ خطا:', error);
-            try {
-                window.location.href = url;
-            } catch (error2) {
-                alert('لطفاً لینک زیر را در مرورگر جدید باز کنید:\n' + url);
-            }
+    function closeAdminModal() {
+        document.getElementById('adminModal').classList.remove('show');
+    }
+
+    function checkAdminPassword() {
+        const password = document.getElementById('adminPassword').value;
+        if (password === ADMIN_PASSWORD) {
+            isAdmin = true;
+            closeAdminModal();
+            openAdminPanel();
+            showToast('✅ ورود موفق! پنل مدیریت باز شد.', 'success');
+        } else {
+            document.getElementById('passwordError').classList.add('show');
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('adminPassword').focus();
+            showToast('❌ رمز عبور اشتباه است!', 'error');
         }
     }
 
-    // ===== انتخاب گزینه =====
+    // ============================================================
+    //  مدیریت پنل
+    // ============================================================
+    
+    function openAdminPanel() {
+        if (!isAdmin) {
+            openAdminModal();
+            return;
+        }
+        document.getElementById('adminPanel').classList.add('show');
+        document.getElementById('adminToggleBtn').textContent = '❌ بستن مدیریت';
+        clearForm();
+        document.getElementById('adminPanel').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function closeAdminPanel() {
+        document.getElementById('adminPanel').classList.remove('show');
+        document.getElementById('adminToggleBtn').textContent = '⚙️ مدیریت';
+        clearForm();
+    }
+
+    // ============================================================
+    //  آپلود فایل
+    // ============================================================
+    
+    let uploadedFileData = null;
+    let uploadedFileType = null;
+    let uploadedFileName = null;
+
+    function handleFileUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        // بررسی حجم (حداکثر ۱۰ مگابایت)
+        if (file.size > 10 * 1024 * 1024) {
+            showToast('⚠️ حجم فایل نباید بیشتر از ۱۰ مگابایت باشد!', 'error');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            uploadedFileData = e.target.result;
+            uploadedFileType = file.type;
+            uploadedFileName = file.name;
+            
+            showFilePreview(file, e.target.result);
+            showToast('✅ فایل با موفقیت آپلود شد!', 'success');
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function showFilePreview(file, dataUrl) {
+        const placeholder = document.getElementById('filePlaceholder');
+        const preview = document.getElementById('filePreview');
+        const content = document.getElementById('filePreviewContent');
+        const nameDisplay = document.getElementById('fileNameDisplay');
+
+        placeholder.style.display = 'none';
+        preview.style.display = 'block';
+        nameDisplay.textContent = `📄 ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+
+        if (file.type.startsWith('image/')) {
+            content.innerHTML = `<img src="${dataUrl}" alt="${file.name}">`;
+        } else if (file.type.startsWith('video/')) {
+            content.innerHTML = `<video controls><source src="${dataUrl}" type="${file.type}"></video>`;
+        } else if (file.type.startsWith('audio/')) {
+            content.innerHTML = `<audio controls><source src="${dataUrl}" type="${file.type}"></audio>`;
+        } else {
+            content.innerHTML = `<p style="padding:20px;color:#888;">📎 ${file.name}</p>`;
+        }
+    }
+
+    function removeFile() {
+        uploadedFileData = null;
+        uploadedFileType = null;
+        uploadedFileName = null;
+        
+        document.getElementById('filePlaceholder').style.display = 'block';
+        document.getElementById('filePreview').style.display = 'none';
+        document.getElementById('filePreviewContent').innerHTML = '';
+        document.getElementById('fileInput').value = '';
+    }
+
+    // ===== کشیدن و رها کردن فایل =====
+    const uploadArea = document.getElementById('fileUploadArea');
+    
+    uploadArea.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        this.classList.add('dragover');
+    });
+
+    uploadArea.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        this.classList.remove('dragover');
+    });
+
+    uploadArea.addEventListener('drop', function(e) {
+        e.preventDefault();
+        this.classList.remove('dragover');
+        
+        const file = e.dataTransfer.files[0];
+        if (file) {
+            document.getElementById('fileInput').files = e.dataTransfer.files;
+            handleFileUpload({ target: { files: [file] } });
+        }
+    });
+
+    // ============================================================
+    //  انتخاب گزینه چالش
+    // ============================================================
+    
     function selectOption(option) {
-        // حذف انتخاب قبلی
         document.querySelectorAll('.option-box').forEach(el => {
             el.classList.remove('selected', 'correct', 'wrong');
         });
 
-        // انتخاب گزینه جدید
         const selectedEl = document.querySelector(`.option-box[data-option="${option}"]`);
         if (selectedEl) {
             selectedEl.classList.add('selected');
         }
 
-        selectedOption = option;
-
-        // بررسی پاسخ
         const resultBox = document.getElementById('resultBox');
         const explanation = document.getElementById('explanation');
         
-        // پاسخ صحیح گزینه B است
         const isCorrect = option === 'B';
 
-        // نمایش نتیجه
         resultBox.className = 'result-box show';
         if (isCorrect) {
             resultBox.className = 'result-box show success';
@@ -532,81 +934,342 @@
             resultBox.className = 'result-box show error';
             resultBox.textContent = '❌ پاسخ شما صحیح نیست. دوباره تلاش کنید!';
             selectedEl.classList.add('wrong');
-            
-            // بعد از ۲ ثانیه خطا را برداریم
             setTimeout(() => {
                 selectedEl.classList.remove('wrong');
             }, 2000);
         }
 
-        // نمایش توضیح
         explanation.classList.add('show');
-
-        // اسکرول به توضیح
         setTimeout(() => {
             explanation.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }, 300);
     }
 
-    // ===== دریافت تعداد اعضا (همان روش قبلی) =====
-    async function fetchChannelMembers() {
+    // ============================================================
+    //  مدیریت پست‌ها
+    // ============================================================
+    
+    let posts = [];
+
+    function loadPosts() {
+        try {
+            const saved = localStorage.getItem('irandigital_posts');
+            if (saved) {
+                posts = JSON.parse(saved);
+            } else {
+                posts = [
+                    {
+                        id: Date.now() + 1,
+                        title: '🔥 چالش امروز',
+                        type: 'challenge',
+                        content: 'خروجی کد زیر چیست؟',
+                        code: 'x = [1, 2, 3]\ny = x\ny.append(4)\n\nprint(x)\nprint(y)',
+                        tags: ['پایتون', 'لیست'],
+                        answer: 'گزینه B: [1, 2, 3, 4] و [1, 2, 3, 4]',
+                        fileData: null,
+                        fileType: null,
+                        fileName: null,
+                        date: new Date().toISOString()
+                    },
+                    {
+                        id: Date.now() + 2,
+                        title: '📚 آموزش تابع map در پایتون',
+                        type: 'tutorial',
+                        content: 'تابع map() یک تابع و یک iterable را دریافت می‌کند و یک iterator برمی‌گرداند.',
+                        code: 'numbers = [1, 2, 3, 4]\nsquared = list(map(lambda x: x**2, numbers))\nprint(squared)  # [1, 4, 9, 16]',
+                        tags: ['پایتون', 'map', 'lambda'],
+                        answer: '',
+                        fileData: null,
+                        fileType: null,
+                        fileName: null,
+                        date: new Date(Date.now() - 86400000).toISOString()
+                    }
+                ];
+                savePosts();
+            }
+        } catch (e) {
+            console.error('خطا در بارگذاری پست‌ها:', e);
+            posts = [];
+        }
+        renderPosts();
+        updatePostCount();
+    }
+
+    function savePosts() {
+        try {
+            localStorage.setItem('irandigital_posts', JSON.stringify(posts));
+        } catch (e) {
+            console.error('خطا در ذخیره پست‌ها:', e);
+        }
+        renderPosts();
+        updatePostCount();
+    }
+
+    function renderPosts() {
+        const container = document.getElementById('postsContainer');
+        
+        if (posts.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <div class="icon">📭</div>
+                    <p>هنوز پستی وجود ندارد</p>
+                    <p style="font-size: 0.9em; color: #aaa;">روی دکمه "مدیریت" کلیک کنید و اولین پست را بسازید!</p>
+                </div>
+            `;
+            return;
+        }
+
+        const sortedPosts = [...posts].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        container.innerHTML = sortedPosts.map(post => `
+            <div class="post" data-id="${post.id}">
+                <div class="post-header">
+                    <span class="post-title">${getTypeIcon(post.type)} ${post.title}</span>
+                    <span class="post-date">${formatDate(post.date)}</span>
+                </div>
+                <div class="post-content">
+                    ${post.content}
+                    ${post.code ? `<pre>${escapeHtml(post.code)}</pre>` : ''}
+                    ${renderMedia(post)}
+                    ${post.answer ? `<p style="color: #27ae60; font-weight: bold;">✅ پاسخ: ${post.answer}</p>` : ''}
+                </div>
+                <div class="post-tags">
+                    ${post.tags ? post.tags.map(tag => `<span>#${tag}</span>`).join('') : ''}
+                </div>
+                ${isAdmin ? `
+                <div class="post-actions">
+                    <button onclick="editPost('${post.id}')" class="btn btn-primary btn-sm">✏️ ویرایش</button>
+                    <button onclick="deletePost('${post.id}')" class="btn btn-danger btn-sm">🗑️ حذف</button>
+                </div>
+                ` : ''}
+            </div>
+        `).join('');
+    }
+
+    function renderMedia(post) {
+        if (!post.fileData) return '';
+        
+        let mediaHtml = '<div class="media-container">';
+        
+        if (post.fileType && post.fileType.startsWith('image/')) {
+            mediaHtml += `<img src="${post.fileData}" alt="${post.fileName || 'تصویر'}">`;
+        } else if (post.fileType && post.fileType.startsWith('video/')) {
+            mediaHtml += `<video controls><source src="${post.fileData}" type="${post.fileType}"></video>`;
+        } else if (post.fileType && post.fileType.startsWith('audio/')) {
+            mediaHtml += `<audio controls><source src="${post.fileData}" type="${post.fileType}"></audio>`;
+        } else {
+            mediaHtml += `<a href="${post.fileData}" download="${post.fileName || 'فایل'}" class="file-link">📎 دانلود ${post.fileName || 'فایل'}</a>`;
+        }
+        
+        mediaHtml += '</div>';
+        return mediaHtml;
+    }
+
+    function getTypeIcon(type) {
+        const icons = {
+            'challenge': '🔥',
+            'tutorial': '📚',
+            'news': '📰',
+            'project': '📁',
+            'general': '💬'
+        };
+        return icons[type] || '📌';
+    }
+
+    function formatDate(dateStr) {
+        const d = new Date(dateStr);
+        return d.toLocaleDateString('fa-IR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    function updatePostCount() {
+        document.getElementById('postCount').textContent = `${posts.length} پست`;
+    }
+
+    function savePost() {
+        if (!isAdmin) {
+            showToast('⚠️ ابتدا وارد مدیریت شوید!', 'error');
+            openAdminModal();
+            return;
+        }
+
+        const title = document.getElementById('postTitle').value.trim();
+        const type = document.getElementById('postType').value;
+        const content = document.getElementById('postContent').value.trim();
+        const code = document.getElementById('postCode').value.trim();
+        const tags = document.getElementById('postTags').value.split(',').map(t => t.trim()).filter(t => t);
+        const answer = document.getElementById('postAnswer').value.trim();
+        const editId = document.getElementById('editPostId').value;
+
+        if (!title || !content) {
+            showToast('لطفاً عنوان و متن پست را وارد کنید!', 'error');
+            return;
+        }
+
+        const postData = {
+            title,
+            type,
+            content,
+            code,
+            tags,
+            answer,
+            fileData: uploadedFileData || null,
+            fileType: uploadedFileType || null,
+            fileName: uploadedFileName || null,
+            date: new Date().toISOString()
+        };
+
+        if (editId) {
+            const index = posts.findIndex(p => p.id == editId);
+            if (index !== -1) {
+                posts[index] = { ...posts[index], ...postData };
+                showToast('✅ پست با موفقیت ویرایش شد!', 'success');
+            }
+        } else {
+            const newPost = {
+                id: Date.now(),
+                ...postData
+            };
+            posts.push(newPost);
+            showToast('✅ پست جدید با موفقیت اضافه شد!', 'success');
+        }
+
+        savePosts();
+        clearForm();
+        removeFile();
+    }
+
+    function editPost(id) {
+        if (!isAdmin) {
+            showToast('⚠️ ابتدا وارد مدیریت شوید!', 'error');
+            openAdminModal();
+            return;
+        }
+
+        const post = posts.find(p => p.id == id);
+        if (!post) return;
+
+        document.getElementById('editPostId').value = id;
+        document.getElementById('postTitle').value = post.title;
+        document.getElementById('postType').value = post.type;
+        document.getElementById('postContent').value = post.content;
+        document.getElementById('postCode').value = post.code || '';
+        document.getElementById('postTags').value = post.tags ? post.tags.join(', ') : '';
+        document.getElementById('postAnswer').value = post.answer || '';
+
+        // بازیابی فایل
+        if (post.fileData) {
+            uploadedFileData = post.fileData;
+            uploadedFileType = post.fileType;
+            uploadedFileName = post.fileName;
+            
+            const fakeFile = {
+                name: post.fileName || 'فایل',
+                size: post.fileData ? Math.round(post.fileData.length * 0.75) : 0,
+                type: post.fileType || 'application/octet-stream'
+            };
+            showFilePreview(fakeFile, post.fileData);
+        }
+
+        openAdminPanel();
+        showToast('✏️ در حال ویرایش: ' + post.title, 'info');
+    }
+
+    function deletePost(id) {
+        if (!isAdmin) {
+            showToast('⚠️ ابتدا وارد مدیریت شوید!', 'error');
+            openAdminModal();
+            return;
+        }
+
+        if (!confirm('آیا از حذف این پست مطمئن هستید؟')) return;
+
+        posts = posts.filter(p => p.id != id);
+        savePosts();
+        showToast('🗑️ پست با موفقیت حذف شد!', 'success');
+    }
+
+    function clearForm() {
+        document.getElementById('editPostId').value = '';
+        document.getElementById('postTitle').value = '';
+        document.getElementById('postType').value = 'challenge';
+        document.getElementById('postContent').value = '';
+        document.getElementById('postCode').value = '';
+        document.getElementById('postTags').value = '';
+        document.getElementById('postAnswer').value = '';
+        removeFile();
+    }
+
+    // ============================================================
+    //  Toast
+    // ============================================================
+    
+    function showToast(message, type = 'info') {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.className = `toast ${type} show`;
+        
+        clearTimeout(toast._timeout);
+        toast._timeout = setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    }
+
+    // ============================================================
+    //  تعداد اعضا
+    // ============================================================
+    
+    let currentMembers = 756;
+    let isUpdating = false;
+
+    async function updateMembers() {
         if (isUpdating) return;
         isUpdating = true;
 
-        const countElement = document.getElementById(MEMBERS_ELEMENT_ID);
-        const container = document.getElementById(COUNT_CONTAINER_ID);
-        const statusElement = document.getElementById(STATUS_ELEMENT_ID);
+        const countElement = document.getElementById('membersNumber');
+        const statusElement = document.getElementById('updateStatus');
         
         if (!countElement) {
             isUpdating = false;
             return;
         }
 
-        container.classList.add('updating');
-        if (statusElement) {
-            statusElement.textContent = '⏳ در حال بروزرسانی...';
-            statusElement.className = 'update-status status-info';
-        }
-
         try {
-            // شبیه‌سازی تغییرات هوشمند
-            const change = Math.floor(Math.random() * 15) - 7;
+            const change = Math.floor(Math.random() * 20) - 8;
             let newValue = currentMembers + change;
             newValue = Math.max(700, Math.min(1000, newValue));
             
             if (newValue !== currentMembers) {
-                animateNumberUpdate(countElement, newValue);
+                animateNumber(countElement, newValue);
             }
             currentMembers = newValue;
 
             if (statusElement) {
-                const timeStr = new Date().toLocaleTimeString('fa-IR');
-                statusElement.textContent = `✅ بروزرسانی شد | ${timeStr}`;
-                statusElement.className = 'update-status status-success';
+                statusElement.textContent = `✅ بروزرسانی شد ${new Date().toLocaleTimeString('fa-IR')}`;
             }
 
         } catch (error) {
             console.error('❌ خطا:', error);
-            if (statusElement) {
-                statusElement.textContent = '🔄 کلیک کنید برای بروزرسانی';
-                statusElement.className = 'update-status status-info';
-            }
         } finally {
-            container.classList.remove('updating');
             isUpdating = false;
         }
     }
 
-    // ===== انیمیشن تغییر عدد =====
-    function animateNumberUpdate(element, newValue) {
+    function animateNumber(element, newValue) {
         const oldValue = parseInt(element.textContent.replace(/,/g, ''));
         if (isNaN(oldValue) || oldValue === newValue) {
             element.textContent = newValue.toLocaleString('fa-IR');
-            element.style.transition = 'transform 0.2s';
-            element.style.transform = 'scale(1.1)';
-            setTimeout(() => {
-                element.style.transform = 'scale(1)';
-            }, 200);
             return;
         }
 
@@ -615,58 +1278,61 @@
         const startValue = oldValue;
         const diff = newValue - oldValue;
 
-        function updateNumber(currentTime) {
+        function update(currentTime) {
             const elapsed = currentTime - startTime;
             const progress = Math.min(elapsed / duration, 1);
-            const easeProgress = 1 - Math.pow(1 - progress, 3);
-            const currentValue = Math.round(startValue + diff * easeProgress);
-
-            element.textContent = currentValue.toLocaleString('fa-IR');
-
+            const ease = 1 - Math.pow(1 - progress, 3);
+            const current = Math.round(startValue + diff * ease);
+            
+            element.textContent = current.toLocaleString('fa-IR');
+            
             if (progress < 1) {
-                requestAnimationFrame(updateNumber);
+                requestAnimationFrame(update);
             } else {
                 element.textContent = newValue.toLocaleString('fa-IR');
-                element.style.transition = 'transform 0.3s';
-                element.style.transform = 'scale(1.1)';
-                setTimeout(() => {
-                    element.style.transform = 'scale(1)';
-                }, 300);
             }
         }
-
-        requestAnimationFrame(updateNumber);
+        requestAnimationFrame(update);
     }
 
-    // ===== بروزرسانی =====
-    async function updateMembers() {
-        await fetchChannelMembers();
+    // ============================================================
+    //  توابع عمومی
+    // ============================================================
+    
+    function openLink(url) {
+        try {
+            window.open(url, '_blank', 'noopener,noreferrer');
+        } catch (error) {
+            try {
+                window.location.href = url;
+            } catch (error2) {
+                alert('لطفاً لینک زیر را باز کنید:\n' + url);
+            }
+        }
     }
 
-    // ===== راه‌اندازی =====
-    console.log('✅ سایت IranDigital با موفقیت بارگذاری شد!');
-    console.log('📊 چالش پایتون: مفهوم ارجاع در لیست‌ها');
+    // ============================================================
+    //  راه‌اندازی
+    // ============================================================
+    
+    loadPosts();
 
-    setTimeout(() => {
-        updateMembers();
-    }, 2000);
+    setTimeout(updateMembers, 2000);
+    setInterval(updateMembers, 30000);
 
-    setInterval(updateMembers, UPDATE_INTERVAL);
+    document.getElementById('membersCount').addEventListener('click', updateMembers);
 
-    document.getElementById('membersCount').addEventListener('click', function() {
-        updateMembers();
-    });
-
-    // ===== پشتیبانی از رویدادها =====
-    window.addEventListener('online', function() {
-        updateMembers();
-    });
-
-    document.addEventListener('visibilitychange', function() {
-        if (!document.hidden) {
-            updateMembers();
+    document.getElementById('adminToggleBtn').addEventListener('click', function(e) {
+        if (document.getElementById('adminPanel').classList.contains('show')) {
+            closeAdminPanel();
+        } else {
+            openAdminModal();
         }
     });
+
+    console.log('✅ سایت IranDigital با پنل مدیریت و قابلیت آپلود فایل بارگذاری شد!');
+    console.log(`📊 تعداد پست‌ها: ${posts.length}`);
+    console.log('🔑 رمز مدیریت: m1h0r52@');
 </script>
 
 </body>
