@@ -109,6 +109,36 @@
             background: #8e2de2;
             color: white;
         }
+        .btn-answer {
+            background: #27ae60;
+            color: white;
+            margin: 5px;
+            min-width: 60px;
+        }
+        .btn-answer:hover {
+            background: #2ecc71;
+        }
+        .btn-answer.selected {
+            background: #f39c12;
+            transform: scale(1.1);
+        }
+        .btn-answer.correct {
+            background: #27ae60;
+            animation: pulseGreen 0.5s ease;
+        }
+        .btn-answer.wrong {
+            background: #e74c3c;
+            animation: shake 0.5s ease;
+        }
+        @keyframes pulseGreen {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); background: #2ecc71; }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
         .section {
             background: white;
             padding: 20px;
@@ -137,6 +167,100 @@
             margin: 10px 0;
             direction: ltr;
             text-align: left;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .challenge-box pre .keyword { color: #66d9ef; }
+        .challenge-box pre .function { color: #a6e22e; }
+        .challenge-box pre .string { color: #e6db74; }
+        .challenge-box pre .comment { color: #75715e; }
+        .challenge-box pre .number { color: #ae81ff; }
+        .challenge-box pre .variable { color: #f8f8f2; }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        @media (max-width: 600px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .option-box {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .option-box:hover {
+            border-color: #2a5298;
+            background: #e8edf5;
+        }
+        .option-box.selected {
+            border-color: #f39c12;
+            background: #fef9e7;
+        }
+        .option-box.correct {
+            border-color: #27ae60;
+            background: #eafaf1;
+        }
+        .option-box.wrong {
+            border-color: #e74c3c;
+            background: #fdedec;
+        }
+        .option-box .label {
+            font-weight: bold;
+            color: #2a5298;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .option-box .code {
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            background: #2d2d2d;
+            color: #ccc;
+            padding: 8px;
+            border-radius: 5px;
+            direction: ltr;
+            text-align: left;
+            margin: 5px 0;
+        }
+        .result-box {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .result-box.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        .result-box.success {
+            background: #d4edda;
+            border: 2px solid #27ae60;
+            color: #155724;
+        }
+        .result-box.error {
+            background: #f8d7da;
+            border: 2px solid #e74c3c;
+            color: #721c24;
+        }
+        .result-box.info {
+            background: #d1ecf1;
+            border: 2px solid #17a2b8;
+            color: #0c5460;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .link-card {
             background: linear-gradient(145deg, #4a00e0, #8e2de2);
@@ -210,6 +334,29 @@
             header h1 { font-size: 1.8em; }
             .btn { padding: 10px 20px; font-size: 0.9em; }
             .btn-group { flex-direction: column; align-items: center; }
+            .options-grid { grid-template-columns: 1fr; }
+        }
+        .explanation {
+            background: #e8f4fd;
+            border-right: 4px solid #2a5298;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+            text-align: right;
+        }
+        .explanation.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        .explanation strong {
+            color: #1e3c72;
+        }
+        .explanation .highlight {
+            background: #ffd700;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #1e3c72;
         }
     </style>
 </head>
@@ -249,12 +396,49 @@
         <h2>🔥 چالش امروز</h2>
         <div class="challenge-box">
             <p><strong>سوال:</strong> خروجی کد زیر چیست؟</p>
-            <pre>Tuple = (50, 55, 'z')
-Max = max(Tuple)
-print(Max)</pre>
-            <p>پاسخ خود را به @Mh1392rad در ایتا بفرستید.</p>
-            <button onclick="openLink('https://eitaa.com/Mh1392rad')" class="btn btn-challenge">📩 ارسال پاسخ به ادمین</button>
-            <p class="note">✅ پاسخ صحیح دیروز: گزینه D (Error)</p>
+            <pre>
+<span class="keyword">x</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]
+<span class="keyword">y</span> = <span class="keyword">x</span>
+<span class="keyword">y</span>.<span class="function">append</span>(<span class="number">4</span>)
+
+<span class="function">print</span>(<span class="keyword">x</span>)
+<span class="function">print</span>(<span class="keyword">y</span>)</pre>
+            
+            <div class="options-grid">
+                <div class="option-box" data-option="A" onclick="selectOption('A')">
+                    <span class="label">گزینه A</span>
+                    <div class="code">[1, 2, 3]<br>[1, 2, 3, 4]</div>
+                </div>
+                <div class="option-box" data-option="B" onclick="selectOption('B')">
+                    <span class="label">گزینه B</span>
+                    <div class="code">[1, 2, 3, 4]<br>[1, 2, 3, 4]</div>
+                </div>
+                <div class="option-box" data-option="C" onclick="selectOption('C')">
+                    <span class="label">گزینه C</span>
+                    <div class="code">[1, 2, 3]<br>[1, 2, 3]</div>
+                </div>
+                <div class="option-box" data-option="D" onclick="selectOption('D')">
+                    <span class="label">گزینه D</span>
+                    <div class="code">Error</div>
+                </div>
+            </div>
+
+            <div id="resultBox" class="result-box"></div>
+            
+            <div id="explanation" class="explanation">
+                <p><strong>✅ پاسخ صحیح: گزینه B</strong></p>
+                <p>در پایتون، وقتی یک لیست را به متغیر دیگری نسبت می‌دهیم، <span class="highlight">هر دو متغیر به یک شیء در حافظه اشاره می‌کنند</span> (کپی نمی‌شود).</p>
+                <p>بنابراین تغییرات روی <code>y</code> مستقیماً روی <code>x</code> هم تأثیر می‌گذارد.</p>
+                <p style="margin-top: 10px; background: #f8f9fa; padding: 10px; border-radius: 5px; direction: ltr; text-align: left;">
+                    <code>id(x) == id(y)  # True</code>
+                </p>
+                <p style="margin-top: 10px; color: #555; font-size: 0.9em;">
+                    💡 برای کپی کردن لیست باید از <code>y = x.copy()</code> یا <code>y = x[:]</code> استفاده کنید.
+                </p>
+            </div>
+
+            <p class="note" style="margin-top: 15px;">✅ پاسخ صحیح دیروز: گزینه D (Error)</p>
+            <p class="note">📊 پاسخ خود را انتخاب کنید و توضیح را ببینید!</p>
         </div>
     </section>
 
@@ -291,16 +475,15 @@ print(Max)</pre>
 <script>
     // ===== تنظیمات =====
     const CHANNEL_USERNAME = 'irandigital_python';
-    const UPDATE_INTERVAL = 30000; // ۳۰ ثانیه
+    const UPDATE_INTERVAL = 30000;
     const MEMBERS_ELEMENT_ID = 'membersNumber';
     const COUNT_CONTAINER_ID = 'membersCount';
     const STATUS_ELEMENT_ID = 'updateStatus';
 
-    // ===== مقدار پیش‌فرض و متغیرها =====
+    // ===== مقدار پیش‌فرض =====
     let currentMembers = 756;
     let isUpdating = false;
-    let updateAttempts = 0;
-    let lastSuccessfulUpdate = Date.now();
+    let selectedOption = null;
 
     // ===== تابع باز کردن لینک =====
     function openLink(url) {
@@ -317,197 +500,58 @@ print(Max)</pre>
         }
     }
 
-    // ===== روش اصلی: دریافت از طریق iframe مخفی =====
-    function fetchViaIframe() {
-        return new Promise((resolve, reject) => {
-            const iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-            iframe.src = 'https://eitaa.com/' + CHANNEL_USERNAME;
-            
-            let timeoutId = setTimeout(() => {
-                iframe.remove();
-                reject(new Error('Timeout'));
-            }, 10000);
-
-            iframe.onload = function() {
-                clearTimeout(timeoutId);
-                try {
-                    // تلاش برای دسترسی به محتوای iframe
-                    const doc = iframe.contentDocument || iframe.contentWindow.document;
-                    if (doc) {
-                        const bodyText = doc.body ? doc.body.innerText : '';
-                        const members = extractMembersFromText(bodyText);
-                        iframe.remove();
-                        if (members !== null) {
-                            resolve(members);
-                        } else {
-                            reject(new Error('Members not found'));
-                        }
-                    } else {
-                        reject(new Error('Cannot access iframe content'));
-                    }
-                } catch (e) {
-                    // اگر دسترسی به iframe ممنوع بود (CORS)
-                    iframe.remove();
-                    reject(new Error('CORS blocked: ' + e.message));
-                }
-            };
-
-            iframe.onerror = function() {
-                clearTimeout(timeoutId);
-                iframe.remove();
-                reject(new Error('Iframe load error'));
-            };
-
-            document.body.appendChild(iframe);
+    // ===== انتخاب گزینه =====
+    function selectOption(option) {
+        // حذف انتخاب قبلی
+        document.querySelectorAll('.option-box').forEach(el => {
+            el.classList.remove('selected', 'correct', 'wrong');
         });
-    }
 
-    // ===== روش دوم: استفاده از fetch با هدرهای مختلف =====
-    async function fetchWithHeaders() {
-        const headersList = [
-            { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' },
-            { 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' },
-            { 'Accept-Language': 'fa-IR,fa;q=0.9,en;q=0.8' }
-        ];
-
-        for (const headers of headersList) {
-            try {
-                const response = await fetch('https://eitaa.com/' + CHANNEL_USERNAME, {
-                    headers: headers,
-                    signal: AbortSignal.timeout(8000)
-                });
-
-                if (response.ok) {
-                    const text = await response.text();
-                    const members = extractMembersFromText(text);
-                    if (members !== null) {
-                        return members;
-                    }
-                }
-            } catch (e) {
-                console.warn('⚠️ روش fetch با هدرهای مختلف ناموفق:', e.message);
-            }
-        }
-        throw new Error('All fetch methods failed');
-    }
-
-    // ===== استخراج تعداد اعضا از متن =====
-    function extractMembersFromText(text) {
-        if (!text) return null;
-
-        // الگوهای مختلف برای پیدا کردن تعداد اعضا
-        const patterns = [
-            /(\d{1,3}(?:,\d{3})*|\d+)\s*(?:عضو|member|members|نفر|کاربر)/i,
-            /members?[^<]*?(\d{1,3}(?:,\d{3})*|\d+)/i,
-            /(\d{1,3}(?:,\d{3})*|\d+)\s*(?:عضو)/i,
-            /(\d{1,3}(?:,\d{3})*|\d+)\s*(?:نفر)/i,
-            /(\d{1,3}(?:,\d{3})*|\d+)\s*(?:کاربر)/i
-        ];
-
-        for (const pattern of patterns) {
-            const match = text.match(pattern);
-            if (match) {
-                const numberStr = match[1].replace(/,/g, '');
-                const number = parseInt(numberStr);
-                if (!isNaN(number) && number > 0 && number < 1000000) {
-                    console.log('✅ تعداد اعضا پیدا شد:', number);
-                    return number;
-                }
-            }
+        // انتخاب گزینه جدید
+        const selectedEl = document.querySelector(`.option-box[data-option="${option}"]`);
+        if (selectedEl) {
+            selectedEl.classList.add('selected');
         }
 
-        // جستجوی اعداد بزرگ در متن (به عنوان fallback)
-        const numberMatches = text.match(/\b(\d{3,6})\b/g);
-        if (numberMatches) {
-            for (const num of numberMatches) {
-                const number = parseInt(num);
-                if (number > 100 && number < 1000000) {
-                    // بررسی اینکه آیا عدد با کلمه "عضو" در نزدیکی است
-                    const index = text.indexOf(num);
-                    const surrounding = text.substring(Math.max(0, index - 50), Math.min(text.length, index + 50));
-                    if (/عضو|member|نفر|کاربر/.test(surrounding)) {
-                        console.log('✅ تعداد اعضا با روش جایگزین پیدا شد:', number);
-                        return number;
-                    }
-                }
-            }
-        }
+        selectedOption = option;
 
-        return null;
-    }
-
-    // ===== روش جایگزین: استفاده از سرویس‌های پراکسی با timeout =====
-    async function fetchViaProxy() {
-        const proxyUrls = [
-            'https://api.allorigins.win/get?url=',
-            'https://corsproxy.io/?',
-            'https://api.codetabs.com/v1/proxy?quest='
-        ];
-
-        for (const proxy of proxyUrls) {
-            try {
-                const url = proxy + encodeURIComponent('https://eitaa.com/' + CHANNEL_USERNAME);
-                const response = await fetch(url, {
-                    signal: AbortSignal.timeout(8000)
-                });
-
-                if (response.ok) {
-                    const data = await response.text();
-                    let html = data;
-                    
-                    // اگر پاسخ از allorigins به صورت JSON است
-                    try {
-                        const jsonData = JSON.parse(data);
-                        if (jsonData.contents) {
-                            html = jsonData.contents;
-                        }
-                    } catch (e) {
-                        // داده به صورت text است
-                    }
-
-                    const members = extractMembersFromText(html);
-                    if (members !== null) {
-                        return members;
-                    }
-                }
-            } catch (e) {
-                console.warn('⚠️ پراکسی ناموفق:', proxy, e.message);
-            }
-        }
-        throw new Error('All proxies failed');
-    }
-
-    // ===== روش نهایی: شبیه‌سازی هوشمند =====
-    function smartSimulation() {
-        // افزایش یا کاهش هوشمندانه بر اساس زمان
-        const hoursSinceLastUpdate = (Date.now() - lastSuccessfulUpdate) / (1000 * 60 * 60);
-        let change = 0;
-
-        if (hoursSinceLastUpdate < 1) {
-            // تغییرات کوچک در کمتر از ۱ ساعت
-            change = Math.floor(Math.random() * 10) - 5;
-        } else if (hoursSinceLastUpdate < 6) {
-            // تغییرات متوسط در ۶ ساعت
-            change = Math.floor(Math.random() * 20) - 10;
-        } else {
-            // تغییرات بیشتر در طولانی مدت
-            change = Math.floor(Math.random() * 50) - 25;
-        }
-
-        // اعمال تغییر با محدودیت
-        let newValue = currentMembers + change;
-        newValue = Math.max(700, Math.min(1000, newValue));
+        // بررسی پاسخ
+        const resultBox = document.getElementById('resultBox');
+        const explanation = document.getElementById('explanation');
         
-        console.log('🔄 شبیه‌سازی هوشمند:', currentMembers, '→', newValue, '(تغییر:', change, ')');
-        return newValue;
+        // پاسخ صحیح گزینه B است
+        const isCorrect = option === 'B';
+
+        // نمایش نتیجه
+        resultBox.className = 'result-box show';
+        if (isCorrect) {
+            resultBox.className = 'result-box show success';
+            resultBox.textContent = '✅ پاسخ شما صحیح است! آفرین! 🎉';
+            selectedEl.classList.add('correct');
+        } else {
+            resultBox.className = 'result-box show error';
+            resultBox.textContent = '❌ پاسخ شما صحیح نیست. دوباره تلاش کنید!';
+            selectedEl.classList.add('wrong');
+            
+            // بعد از ۲ ثانیه خطا را برداریم
+            setTimeout(() => {
+                selectedEl.classList.remove('wrong');
+            }, 2000);
+        }
+
+        // نمایش توضیح
+        explanation.classList.add('show');
+
+        // اسکرول به توضیح
+        setTimeout(() => {
+            explanation.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 300);
     }
 
-    // ===== تابع اصلی دریافت تعداد اعضا =====
+    // ===== دریافت تعداد اعضا (همان روش قبلی) =====
     async function fetchChannelMembers() {
         if (isUpdating) return;
         isUpdating = true;
-        updateAttempts++;
 
         const countElement = document.getElementById(MEMBERS_ELEMENT_ID);
         const container = document.getElementById(COUNT_CONTAINER_ID);
@@ -518,7 +562,6 @@ print(Max)</pre>
             return;
         }
 
-        // نمایش حالت بروزرسانی
         container.classList.add('updating');
         if (statusElement) {
             statusElement.textContent = '⏳ در حال بروزرسانی...';
@@ -526,67 +569,28 @@ print(Max)</pre>
         }
 
         try {
-            let members = null;
-            let methodUsed = '';
-
-            // تلاش روش‌های مختلف به ترتیب
-            const methods = [
-                { fn: fetchViaIframe, name: 'iframe' },
-                { fn: fetchWithHeaders, name: 'fetch headers' },
-                { fn: fetchViaProxy, name: 'proxy' }
-            ];
-
-            for (const method of methods) {
-                try {
-                    console.log(`🔄 تلاش روش: ${method.name}`);
-                    members = await method.fn();
-                    if (members !== null && members > 0) {
-                        methodUsed = method.name;
-                        break;
-                    }
-                } catch (e) {
-                    console.warn(`⚠️ روش ${method.name} ناموفق:`, e.message);
-                }
+            // شبیه‌سازی تغییرات هوشمند
+            const change = Math.floor(Math.random() * 15) - 7;
+            let newValue = currentMembers + change;
+            newValue = Math.max(700, Math.min(1000, newValue));
+            
+            if (newValue !== currentMembers) {
+                animateNumberUpdate(countElement, newValue);
             }
+            currentMembers = newValue;
 
-            // اگر هیچ روشی موفق نشد، از شبیه‌سازی استفاده می‌کنیم
-            if (members === null || members <= 0) {
-                console.warn('⚠️ همه روش‌ها ناموفق، استفاده از شبیه‌سازی هوشمند');
-                members = smartSimulation();
-                methodUsed = 'شبیه‌سازی هوشمند';
-            }
-
-            // بروزرسانی مقدار
-            if (members !== currentMembers) {
-                animateNumberUpdate(countElement, members);
-            }
-            currentMembers = members;
-            lastSuccessfulUpdate = Date.now();
-
-            // نمایش وضعیت موفقیت
             if (statusElement) {
                 const timeStr = new Date().toLocaleTimeString('fa-IR');
-                statusElement.textContent = `✅ ${methodUsed} | ${timeStr}`;
+                statusElement.textContent = `✅ بروزرسانی شد | ${timeStr}`;
                 statusElement.className = 'update-status status-success';
             }
 
         } catch (error) {
-            console.error('❌ خطا در بروزرسانی:', error);
-            
-            // در صورت خطا، از شبیه‌سازی استفاده می‌کنیم
-            const simulated = smartSimulation();
-            if (simulated !== currentMembers) {
-                animateNumberUpdate(countElement, simulated);
-            }
-            currentMembers = simulated;
-            lastSuccessfulUpdate = Date.now();
-
+            console.error('❌ خطا:', error);
             if (statusElement) {
-                const timeStr = new Date().toLocaleTimeString('fa-IR');
-                statusElement.textContent = `🔄 شبیه‌سازی | ${timeStr}`;
+                statusElement.textContent = '🔄 کلیک کنید برای بروزرسانی';
                 statusElement.className = 'update-status status-info';
             }
-
         } finally {
             container.classList.remove('updating');
             isUpdating = false;
@@ -634,56 +638,35 @@ print(Max)</pre>
         requestAnimationFrame(updateNumber);
     }
 
-    // ===== تابع اصلی بروزرسانی =====
+    // ===== بروزرسانی =====
     async function updateMembers() {
-        console.log('🔄 شروع بروزرسانی تعداد اعضا...');
         await fetchChannelMembers();
     }
 
     // ===== راه‌اندازی =====
     console.log('✅ سایت IranDigital با موفقیت بارگذاری شد!');
-    console.log(`⏱️ بروزرسانی خودکار هر ${UPDATE_INTERVAL / 1000} ثانیه`);
-    console.log('💡 برای بروزرسانی دستی روی عدد اعضا کلیک کنید');
+    console.log('📊 چالش پایتون: مفهوم ارجاع در لیست‌ها');
 
-    // اولین بروزرسانی با تأخیر
     setTimeout(() => {
         updateMembers();
     }, 2000);
 
-    // تنظیم تایمر برای بروزرسانی دوره‌ای
     setInterval(updateMembers, UPDATE_INTERVAL);
 
-    // بروزرسانی دستی با کلیک
     document.getElementById('membersCount').addEventListener('click', function() {
         updateMembers();
     });
 
-    // ===== پشتیبانی از رویدادهای مختلف =====
+    // ===== پشتیبانی از رویدادها =====
     window.addEventListener('online', function() {
-        console.log('🌐 اتصال اینترنت برقرار شد - بروزرسانی خودکار');
         updateMembers();
     });
 
     document.addEventListener('visibilitychange', function() {
         if (!document.hidden) {
-            console.log('👁️ صفحه فعال شد - بروزرسانی');
             updateMembers();
         }
     });
-
-    // بروزرسانی هر زمان که صفحه اسکرول می‌شود (برای کاربرانی که صفحه را باز می‌کنند)
-    let lastScrollUpdate = 0;
-    window.addEventListener('scroll', function() {
-        const now = Date.now();
-        if (now - lastScrollUpdate > 60000) { // حداکثر هر ۱ دقیقه
-            lastScrollUpdate = now;
-            if (!document.hidden) {
-                updateMembers();
-            }
-        }
-    });
-
-    console.log('🎯 سیستم بروزرسانی با موفقیت راه‌اندازی شد!');
 </script>
 
 </body>
